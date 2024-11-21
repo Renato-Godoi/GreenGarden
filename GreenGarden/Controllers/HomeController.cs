@@ -1,5 +1,6 @@
 using GreenGarden.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 
 namespace GreenGarden.Controllers
@@ -22,9 +23,37 @@ namespace GreenGarden.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
         public IActionResult Cadastro()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cadastro(Cadastro cadastro)
+        {
+            if (ModelState.IsValid)
+            {
+                cadastro.Cadastrar();
+                if (cadastro._cadScss == true)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Console.WriteLine("cadastro mal sucedido");
+                }
+            }
+            else if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine($"Erro: {error.ErrorMessage}");
+                }
+            }
+
+            return View(cadastro);
         }
         public IActionResult QuemSomos()
         {
