@@ -4,13 +4,35 @@
 @{
     ViewData["Title"] = "Pagina Cadastro";
 }
+
+@if (TempData["Mensagem"] != null)
+{
+    <script>
+        Swal.fire({
+            title: 'Mensagem',
+            text: '@TempData["Mensagem"]',
+            icon: 'success', // ou 'error' para mensagens de erro
+            confirmButtonText: 'OK'
+        });
+    </script>
+}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Cadastro</title>
     <style>
+
+        .container {
+            display: flex; /* Coloca os elementos lado a lado */
+            gap: 10px; /* Espaço entre os botões */
+        }
+
+
+
         *{
             margin: 0;
             padding: 0;
@@ -67,20 +89,14 @@
             font-weight: bold;
         }
 
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-        input[type="text"], input[type="email"], input[type="tel"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
+
+        
 
         input[type="submit"] {
             background-color: #4CAF50;
@@ -92,9 +108,9 @@
             width: 100%;
         }
 
-            input[type="submit"]:hover {
-                background-color: #45a049;
-            }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
 
         .form-container {
             display: flex;
@@ -108,36 +124,59 @@
             <div class="container">
                 <form asp-action="Cadastro" method="post" id="formCadastro">
                     <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="Nome_completo"  asp-for="Nome_completo" required>
+                    <input type="text" class="form-control" id="nome" name="Nome_completo" asp-for="Nome_completo" required>
 
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="Email"  asp-for="Email" required>
+                    <input type="email" class="form-control" id="email" name="Email" asp-for="Email" required>
 
                     <label for="username">Nome de Usuário:</label>
-                    <input type="text" id="username" name="Name" asp-for="Name" required>
+                    <input type="text" class="form-control" id="username" name="Name" asp-for="Name" required>
 
                     <label for="cpf">cpf:</label>
-                    <input type="text" id="cpf" name="Cpf" asp-for="Cpf" required>
+                    <input type="text" class="form-control" id="cpf" name="Cpf" asp-for="Cpf" required>
 
                     <label for="telefone">Telefone:</label>
-                    <input type="text" id="telefone" name="Tel"  asp-for="Tel" required>
+                    <input type="text" class="form-control" id="telefone" name="Tel" asp-for="Tel" required>
 
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="Senha"  asp-for="Senha" required>
+                    <div>
+                        <label for="senha">Senha:</label>
+                        <input type="password" class="form-control" id="senha" name="Senha" asp-for="Senha" required>
 
-                    <label for="confirmarSenha">Confirme a Senha:</label>
-                    <input type="password" id="confirmarSenha" name="SenhaC" asp-for="SenhaC" required>
+                        <label for="confirmarSenha">Confirme a Senha:</label>
+                        <input type="password" class="form-control" id="confirmarSenha" name="SenhaC" asp-for="SenhaC" required>
 
+
+                    </div>
+                   
                     <!-- checkbox para exibir senha -->
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="Check1">
                         <label class="form-check-label" for="Check1">Mostrar senhas</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                    <!-- Script para alternar a visibilidade das senhas -->
+                    <script>
+                        // Obtém o checkbox e os campos de senha
+                        const checkbox = document.getElementById('Check1');
+                        const senhaField = document.getElementById('senha');
+                        const confirmarSenhaField = document.getElementById('confirmarSenha');
 
-                    <p>Já tem uma conta? <a href="#">Login</a></p>
-                    
+                        // Adiciona um evento de escuta ao checkbox para alterar o tipo dos campos de senha
+                        checkbox.addEventListener('change', function () {
+                            // Verifica se o checkbox está marcado
+                            const tipo = checkbox.checked ? 'text' : 'password';
+
+                            // Altera o tipo dos campos de senha
+                            senhaField.type = tipo;
+                            confirmarSenhaField.type = tipo;
+                        });
+                    </script>
+
+                    <div class="container">
+                        <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                        <p>Já tem uma conta? <a href="Login">Login</a></p>
+                    </div>
+
 
                     <!-- Script para verificar se senhas sao iguais -->
                     <script>
@@ -155,33 +194,8 @@
                             }
                         });
                     </script>
-
-                    
-
                 </form>
-
-                
             </div>
-
-            <!-- Script para alternar a visibilidade das senhas -->
-            <script>
-                // Obtém o checkbox e os campos de senha
-                const checkbox = document.getElementById('Check1');
-                const senhaField = document.getElementById('senha');
-                const confirmarSenhaField = document.getElementById('confirmaSenha');
-
-                // Adiciona um evento de escuta ao checkbox para alterar o tipo dos campos de senha
-                checkbox.addEventListener('change', function () {
-                // Verifica se o checkbox está marcado
-                const tipo = checkbox.checked ? 'text' : 'password';
-
-                    // Altera o tipo dos campos de senha
-                    senhaField.type = tipo;
-                    confirmarSenhaField.type = tipo;
-                });
-            </script>
-
-           
         </section>
     </div>
 

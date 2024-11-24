@@ -21,7 +21,7 @@ namespace GreenGarden.Models
     public class Cadastro
     {
 
-        string strcon = @"Data Source=ATHIRSON-GAMER;" +
+        public string strcon = @"Data Source=ATHIRSON-GAMER;" +
                        "Initial Catalog=GreenGardenDB;Integrated Security=True; TrustServerCertificate=True";
 
         string strcadastrar = "INSERT INTO [dbo].[cliente] (email, cliente_nome, cpf, nome_usuario, senha)" +
