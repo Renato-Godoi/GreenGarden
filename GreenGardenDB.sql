@@ -42,6 +42,8 @@ nome_usuario varchar(30),
 senha VARCHAR(25) NOT NULL 
 FOREIGN KEY (endereco_id) REFERENCES Endereco(endereco_id)
 )
+alter table cliente
+ALTER  COLUMN cpf VARCHAR(20);
 
 --<<exibir>>
 SELECT * FROM Produtos
