@@ -1,8 +1,7 @@
 ﻿@model GreenGarden.Models.Cadastro;
 
-
 @{
-    ViewData["Title"] = "Pagina Cadastro";
+    ViewData["Title"] = "Página Cadastro";
 }
 
 @if (TempData["Mensagem"] != null)
@@ -25,41 +24,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Cadastro</title>
     <style>
-
         .container {
-            display: flex; /* Coloca os elementos lado a lado */
-            gap: 10px; /* Espaço entre os botões */
+            display: flex;
+            gap: 10px;
         }
 
-
-
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Outfit', sans-serif;
         }
-        
-        fundoDiv{
+
+        fundoDiv {
             width: 100%;
             height: 100vh;
-            background-image: url(../../wwwroot/images/fundo_cadastro.jpg);
+            background-image: url(images/fundo_cadastro.jpg);
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
 
-
-        /* Estilos para o modal */
         .modal {
-            display: none; /* Inicialmente escondido */
+            display: none;
             position: fixed;
             z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
@@ -89,14 +83,11 @@
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
+        .close:hover, .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-
-        
 
         input[type="submit"] {
             background-color: #4CAF50;
@@ -119,142 +110,182 @@
     </style>
 </head>
 <body>
-    <div class="fundoDiv">
-        <section class="form-container">
-            <div class="container">
-                <form asp-action="Cadastro" method="post" id="formCadastro">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="Nome_completo" asp-for="Nome_completo" required>
-
-                    <label for="email">E-mail:</label>
-                    <input type="email" class="form-control" id="email" name="Email" asp-for="Email" required>
-
-                    <label for="username">Nome de Usuário:</label>
-                    <input type="text" class="form-control" id="username" name="Name" asp-for="Name" required>
-
-                    <label for="cpf">cpf:</label>
-                    <input type="text" class="form-control" id="cpf" name="Cpf" asp-for="Cpf" required>
-
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" class="form-control" id="telefone" name="Tel" asp-for="Tel" required>
-
-                    <div>
-                        <label for="senha">Senha:</label>
-                        <input type="password" class="form-control" id="senha" name="Senha" asp-for="Senha" required>
-
-                        <label for="confirmarSenha">Confirme a Senha:</label>
-                        <input type="password" class="form-control" id="confirmarSenha" name="SenhaC" asp-for="SenhaC" required>
-
-
-                    </div>
-                   
-                    <!-- checkbox para exibir senha -->
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="Check1">
-                        <label class="form-check-label" for="Check1">Mostrar senhas</label>
-                    </div>
-
-                    <!-- Script para alternar a visibilidade das senhas -->
-                    <script>
-                        // Obtém o checkbox e os campos de senha
-                        const checkbox = document.getElementById('Check1');
-                        const senhaField = document.getElementById('senha');
-                        const confirmarSenhaField = document.getElementById('confirmarSenha');
-
-                        // Adiciona um evento de escuta ao checkbox para alterar o tipo dos campos de senha
-                        checkbox.addEventListener('change', function () {
-                            // Verifica se o checkbox está marcado
-                            const tipo = checkbox.checked ? 'text' : 'password';
-
-                            // Altera o tipo dos campos de senha
-                            senhaField.type = tipo;
-                            confirmarSenhaField.type = tipo;
-                        });
-                    </script>
-
-                    <div class="container">
-                        <button type="submit" class="btn btn-primary">Cadastrar-se</button>
-                        <p>Já tem uma conta? <a href="Login">Login</a></p>
-                    </div>
-
-
-                    <!-- Script para verificar se senhas sao iguais -->
-                    <script>
-                        // Seleciona o formulário e os campos de senha
-                        const form = document.getElementById('formCadastro');
-                        const senha = document.getElementById('senha');
-                        const confirmarSenha = document.getElementById('confirmarSenha');
-
-                        // Adiciona um evento de submit ao formulário
-                        form.addEventListener('submit', function (event) {
-                            // Verifica se as senhas são diferentes
-                            if (senha.value !== confirmarSenha.value) {
-                                event.preventDefault(); // Impede o envio do formulário
-                                alert("As senhas não são iguais! Digite duas senhas iguais"); // Exibe o alerta
-                            }
-                        });
-                    </script>
-                </form>
-            </div>
-        </section>
-    </div>
-
-    <!-- Botão para abrir o modal -->
-    <!-- <button id="openModalBtn">Cadastrar</button> -->
-    
-
-    <!-- O Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModalBtn">&times;</span>
-            <div class="modal-header">
-                <h2>Formulário de Cadastro</h2>
-            </div>
-            <form action="#" method="POST" class="form-container">
+<div>
+    <section class="form-container">
+        <div class="container" style="margin-left: 115%">
+            <form asp-action="Cadastro" method="post" id="formCadastro">
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
+                <input type="text" class="form-control" id="nome" name="Nome_completo" asp-for="Nome_completo" required onkeydown="return SomenteLetras()">
 
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="Email" asp-for="Email" required onblur="ValidaEmail(this);" >
+
+                <label for="username">Nome de Usuário:</label>
+                <input type="text" class="form-control" id="username" name="Name" asp-for="Name" required maxlength="20">
+
+                <label for="cpf">CPF:</label>
+                <input type="text" class="form-control" id="cpf" name="Cpf" asp-for="Cpf" required onkeydown="formatar('###.###.###-##', this); return somenteNumeros(event)" onBlur="ValidarCPF(this);" maxlength="14"  >
 
                 <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" required>
+                <input type="text" class="form-control" id="telefone" maxlength="13" onkeydown="formatar('## #####-####', this); return somenteNumeros(event)" name="Tel" asp-for="Tel" required>
 
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
+                <div>
+                    <label for="senha">Senha:</label>
+                    <input type="password" class="form-control" id="senha" name="Senha" asp-for="Senha" required>
 
-                <label for="confirmaSenha">Confirme a Senha:</label>
-                <input type="password" id="confirmaSenha" name="confirmaSenha" required>
+                    <label for="confirmarSenha">Confirme a Senha:</label>
+                    <input type="password" class="form-control" id="confirmarSenha" name="SenhaC" asp-for="SenhaC" required>
+                </div>
 
-                <input type="submit" value="Cadastrar">
+                <!-- checkbox para exibir senha -->
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="Check1">
+                    <label class="form-check-label" for="Check1">Mostrar senhas</label>
+                </div>
+
+                <!-- Script para alternar a visibilidade das senhas -->
+                <script>
+                    const checkbox = document.getElementById('Check1');
+                    const senhaField = document.getElementById('senha');
+                    const confirmarSenhaField = document.getElementById('confirmarSenha');
+
+                    checkbox.addEventListener('change', function () {
+                        const tipo = checkbox.checked ? 'text' : 'password';
+                        senhaField.type = tipo;
+                        confirmarSenhaField.type = tipo;
+                    });
+                </script>
+
+                <div class="container">
+                    <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                    <p>Já tem uma conta? <a href="Login">Login</a></p>
+                </div>
+
+                <!-- Script para verificar se senhas são iguais -->
+                <script>
+                    const form = document.getElementById('formCadastro');
+                    const senha = document.getElementById('senha');
+                    const confirmarSenha = document.getElementById('confirmarSenha');
+
+                    form.addEventListener('submit', function (event) {
+                        if (senha.value !== confirmarSenha.value) {
+                            event.preventDefault();
+                            alert("As senhas não são iguais! Digite duas senhas iguais");
+                        }
+                    });
+                </script>
             </form>
-            
         </div>
-    </div>
+    </section>
+</div>
 
-    <script>
-        // Obter o modal e os botões
-        var modal = document.getElementById("myModal");
-        var openModalBtn = document.getElementById("openModalBtn");
-        var closeModalBtn = document.getElementById("closeModalBtn");
-
-        // Abrir o modal
-        openModalBtn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // Fechar o modal
-        closeModalBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Fechar o modal se clicar fora dele
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+<script>
+    function somenteNumeros(e) {
+        let charCode = e.keyCode ? e.keyCode : e.which;
+        if (charCode !== 8 && charCode !== 9 && charCode !== 46 && (charCode < 37 || charCode > 40)) {
+            if (charCode < 48 || charCode > 57) {
+                return false;
             }
         }
-    </script>
-    
+        return true;
+    }
+
+    // Função para formatar máscara
+    function formatar(mascara, documento) {
+        var i = documento.value.length;
+        var saida = mascara.substring(0, 1);
+        var texto = mascara.substring(i);
+
+        if (texto.substring(0, 1) != saida) {
+            documento.value += texto.substring(0, 1);
+        }
+    }
+</script>
+
+<script>
+    function ValidaEmail(campo) {
+        if(campo.value != '' && campo.value != null) {
+            var f = campo.value;
+            if((f.indexOf('') == -1) || (f.indexOf('.') == -1) && (f != '')) {
+                window.alert('E-mail inválido!');
+                campo.focus();
+                campo.value = '';
+            }
+        }
+    }
+
+    function SomenteLetras(){
+        var tecla=(window.event)?event.keyCode:e.which;
+        if((tecla>64 && tecla<91)) return true;
+        else{
+            if (tecla>96 && tecla<123 || tecla==32 || tecla==227 || tecla==241 || tecla==0245 || tecla==195 || tecla==209 || tecla==213 || tecla==231 || tecla==225 || tecla== 233 || tecla== 237 || tecla== 243 || tecla== 250 || tecla== 193 || tecla== 201 || tecla== 205 || tecla== 211 || tecla== 218) return true;
+            else  return false;
+        }
+
+    }
+
+    function ValidarCPF (input) {
+        s = input.value;
+        filteredValues = ".-/";
+        var i;
+        var returnString = "";
+        for (i = 0; i < s.length; i++) {
+            var c = s.charAt(i);
+            if (filteredValues.indexOf(c) == -1) returnString += c;
+        }
+        if (returnString=='11111111111' || returnString=='22222222222' ||
+            returnString=='33333333333' || returnString=='44444444444' ||
+            returnString=='55555555555' || returnString=='66666666666' ||
+            returnString=='77777777777' || returnString=='88888888888' ||
+            returnString=='99999999999' || returnString=='00000000000' || returnString=='00000000191')
+        {alert('CFP Inválido!'); input.value=""; return false;}
+        if (returnString.length != 11) {sim=false}
+        else {sim=true}
+        if (sim ) {
+            for (i=0;((i<=(returnString.length-1))&& sim); i++) {
+                val = returnString.charAt(i)
+                if ((val!="9")&&(val!="0")&&(val!="1")&&(val!="2")&&(val!="3")&&(val!="4")
+                    && (val!="5")&&(val!="6")&&(val!="7")&&(val!="8")) {sim=false}
+            }
+            if (sim) {
+                soma = 0
+                for (i=0;i<=8;i++) {
+                    val = eval(returnString.charAt(i))
+                    soma = soma + (val*(i+1))
+                }
+                resto = soma % 11
+                if (resto>9) dig = resto -10
+                else  dig = resto
+                if (dig != eval(returnString.charAt(9))) { sim=false }
+                else {
+                    soma = 0
+                    for (i=0;i<=7;i++) {
+                        val = eval(returnString.charAt(i+1))
+                        soma = soma + (val*(i+1))
+                    }
+                    soma = soma + (dig * 9)
+                    resto = soma % 11
+                    if (resto>9) dig = resto -10
+                    else  dig = resto
+                    if (dig != eval(returnString.charAt(10))) { sim = false }
+                    else {sim = true;}
+                }
+            }
+        }
+
+        if (sim != true) {
+            if (input.value != ''){
+                alert("CPF Inválido! Digite novamente.");
+                input.value = '';
+                return false;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+</script>
+
 </body>
 </html>
