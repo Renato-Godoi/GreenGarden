@@ -20,8 +20,8 @@ namespace GreenGarden.Models
 {
     public class Cadastro
     {
-
-        public string strcon = @"Data Source=ATHIRSON-GAMER;" +
+        //AQUI ESTA A STRING DE CONEXAO, DEVE ALTERA O NOME DO SERVIDOR E COLOCAR O SEU
+        public string strcon = @"Data Source=NOME_SERVIDOR;" +
                        "Initial Catalog=GreenGardenDB;Integrated Security=True; TrustServerCertificate=True";
 
         string strcadastrar = "INSERT INTO [dbo].[cliente] (email, cliente_nome, cpf, nome_usuario, senha)" +
